@@ -1,0 +1,48 @@
+﻿@model  Practice_Wesite_Admin.Models.Product_and__subcat
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <form>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">Product Name</label>
+                <input type="text" class="form-control" id="pname" placeholder="Product Name">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">Description</label>
+                <input type="text" class="form-control" id="pdesc" placeholder="Product Description">
+            </div>
+        </div>
+        
+            <div class="form-group">
+                <label class="form-label" for="customFile">Default file input example</label>
+                <input type="file" class="form-control" id="customFile" multiple />
+            </div>
+            <div class="form-group">
+                <label for="inputAddress">Select Category : </label>
+                @Html.DropDownList("Categories", new SelectList(Model.categories, "CategoryID", "CategoryName", new { @class = "form-control", @id = "cat" }))
+                @Html.ActionLink("Add New Category", "Create", "Categories", new { @class = "btn btn-link" })
+            </div>
+
+       
+  
+            <div class="form-group">
+                <label for="inputAddress">Select Sub Category : </label>
+                @Html.DropDownList("SubCategories", new SelectList(Model.subCategories, "SubCategoryID", "SubCategoryName", new { @class = "form-control", @id = "sub_cat" }))
+                @Html.ActionLink("Add New Sub Category", "Create", "SubCategories", new { @class = "btn btn-link" })
+            </div>
+            <div class="form-group">
+                <label for="inputAddress">Select Sub Sub Category : </label>
+                @Html.DropDownList("SubSubCategories", new SelectList(Model.subSubCategories, "SubSubCategoryID", "SubsUBCategoryName", new { @class = "form-control", @id = "sub_sub_cat" }))
+                @Html.ActionLink("Add New Sub Sub Category", "Create", "SubSubCategories", new { @class = "btn btn-link" })
+            </div>
+ 
+        
+        <button type="submit" class="btn btn-primary" onclick="Add_Product()">Sign in</button>
+    </form>
+<script>
+    function Add_Product() {
+        alert("mynme");
+    }
+</script>
