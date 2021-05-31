@@ -28,6 +28,7 @@ namespace Practice_Wesite_Admin.Controllers
         public IActionResult SaveProduct_withCat(Product_and__subcat p)
         {
             p.product.CreationDate = DateTime.Now;
+            p.product.SubSubCategoryID = p.subSubCategory.SubSubCategoryID;
             _context.products.Add(p.product);
             return View(p);
         }

@@ -38,11 +38,35 @@
                 @Html.ActionLink("Add New Sub Sub Category", "Create", "SubSubCategories", new { @class = "btn btn-link" })
             </div>
  
-        
         <button type="submit" class="btn btn-primary" onclick="Add_Product()">Sign in</button>
     </form>
 <script>
     function Add_Product() {
-        alert("mynme");
+        var psc = new Product_and__subcat();
+        var p = new Product();
+        var img = new Product_Images();
+        var subsubcat = new SubSubCategory();
+        var subcat = new SubCategory();
+        var cat = new Category();
+        p.ProductName = $('#pname').val();
+        p.Description = $('#pdesc').val();
+        subsubcat.SubSubCategoryID = $("#sub_sub_cat").val();
+        subcat.SubCategoryID = $("#sub_cat").val();
+        cat.CategoryID = $("#cat").val
+        psc.Product = p;
+        psc.Product_Images = img;
+        psc.SubSubCategory = subsubcat;
+        psc.SubCategory = subcat;
+        psc.Category = cat;
+        $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("SaveProduct_withCat", "Home", null)",
+                    data: JSON.stringify({ p: psc }),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function myfunction(Response) {
+                        
+                    }, error: function (request, status, error) {
+                    }
+                });
     }
 </script>
