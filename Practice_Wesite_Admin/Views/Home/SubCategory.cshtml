@@ -1,0 +1,7 @@
+﻿@model  IEnumerable<Practice_Wesite_Admin.Models.SubCategory>
+  
+        <label for="inputAddress" class="col-md-12" style="background-color:transparent">Select Sub Category : </label>
+        @Html.DropDownList("SubCategories", new SelectList(Model, "SubCategoryID", "SubCategoryName"), new { @class = "form-control col-md-12",@style="background-color:transparent" })
+        @Html.ActionLink("Add New Sub Category", "Create", "SubCategories",null, new { @class = "btn btn-link col-md-12 inline-block",@style="background-color:transparent;color:#018A9A" })
+        <input type="button" onclick="Update_Sub_Sub()" value="Select" class="btn btn-link col-md-12" style="color:#018A9A" />
+

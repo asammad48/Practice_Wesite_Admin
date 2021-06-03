@@ -1,0 +1,7 @@
+﻿@model  IEnumerable<Practice_Wesite_Admin.Models.Category>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<label for="inputAddress" class="col-md-12" style="background-color:transparent">Select Category : </label>
+@Html.DropDownList("Categories", new SelectList(Model, "CategoryID", "CategoryName"), new { @class = "form-control col-md-12", @id = "cat", @style="background-color:transparent"})
+@Html.ActionLink("Add New Category", "Create", "Categories",null, new { @class = "btn btn-link col-md-12 inline_block", @style="color:#018A9A"})

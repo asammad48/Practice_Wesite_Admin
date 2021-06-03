@@ -19,13 +19,9 @@ namespace Practice_Wesite_Admin.Data
       public DbSet<Product_Variants>  product_Variants { get; set; }
        //DbSet<Product_Category>  product_Categories { get; set; }
       public DbSet<Product>  products { get; set; }
-        public void OnModelCreating(ModelBuilder modelBuilder)
-        {
-           // modelBuilder.Entity<Product_Category>().HasMany().WithMany().WillCascadeOnDelete(false);
-        }
-        public DbSet<Practice_Wesite_Admin.Models.Category_subCategory> Category_subCategory { get; set; }
-        public DbSet<Practice_Wesite_Admin.Models.SubCategory_SubSubcategory> SubCategory_SubSubcategory { get; set; }
-        public DbSet<Specification> specifications { get; set; }
+      public DbSet<Practice_Wesite_Admin.Models.Category_subCategory> Category_subCategory { get; set; }
+      public DbSet<Practice_Wesite_Admin.Models.SubCategory_SubSubcategory> SubCategory_SubSubcategory { get; set; }
+      public DbSet<Specification> specifications { get; set; }
 
     }
 }

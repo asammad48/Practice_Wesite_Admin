@@ -10,11 +10,18 @@ namespace Practice_Wesite_Admin.Models
     public class SubCategory_SubSubcategory
     {
 
+        [Key]
         public int SubCategory_SubSubcategoryID { get; set; }
-       public int SubSubCategoryID { get; set; }
-        public int SubCategoryID { get; set; }
+        [Display(Name = "SubSubCategory")]
+        public virtual int SubSubCategoryID { get; set; }
 
-      
+        [ForeignKey("SubSubCategoryID")]
+        public virtual SubSubCategory SubSubCategories { get; set; }
+        [Display(Name = "SubCategory")]
+        public virtual int SubCategoryID { get; set; }
+
+        [ForeignKey("SubCategoryID")]
+        public virtual SubCategory SubCategories { get; set; }
         public int status { get; set; }
     }
 }

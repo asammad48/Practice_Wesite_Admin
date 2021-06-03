@@ -1,72 +1,179 @@
-﻿@model  Practice_Wesite_Admin.Models.Product_and__subcat
+﻿@model Practice_Wesite_Admin.Models.Product_and__subcat
 @{
     ViewData["Title"] = "Home Page";
 }
 
-    <form>
+    <div class="container col-sm-4">
         <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="inputEmail4">Product Name</label>
-                <input type="text" class="form-control" id="pname" placeholder="Product Name">
+            <div class="form-group col-md-12">
+                @*<label for="inputEmail4">Product Name</label>*@
+                <input type="text" class="form-control" id="pname" placeholder="Product Name" style="background-color:transparent">
             </div>
-            <div class="form-group col-md-6">
-                <label for="inputPassword4">Description</label>
-                <input type="text" class="form-control" id="pdesc" placeholder="Product Description">
+            <div class="form-group col-md-12">
+                @*<label for="inputPassword4">Description</label>*@
+                <input type="text" class="form-control" id="pdesc" placeholder="Product Description" style="background-color:transparent">
             </div>
         </div>
-        
-            <div class="form-group">
-                <label class="form-label" for="customFile">Default file input example</label>
-                <input type="file" class="form-control" id="customFile" multiple />
-            </div>
-            <div class="form-group">
-                <label for="inputAddress">Select Category : </label>
-                @Html.DropDownList("Categories", new SelectList(Model.categories, "CategoryID", "CategoryName", new { @class = "form-control", @id = "cat" }))
-                @Html.ActionLink("Add New Category", "Create", "Categories", new { @class = "btn btn-link" })
-            </div>
+        <div class="for-row">
 
-       
-  
-            <div class="form-group">
-                <label for="inputAddress">Select Sub Category : </label>
-                @Html.DropDownList("SubCategories", new SelectList(Model.subCategories, "SubCategoryID", "SubCategoryName", new { @class = "form-control", @id = "sub_cat" }))
-                @Html.ActionLink("Add New Sub Category", "Create", "SubCategories", new { @class = "btn btn-link" })
-            </div>
-            <div class="form-group">
-                <label for="inputAddress">Select Sub Sub Category : </label>
-                @Html.DropDownList("SubSubCategories", new SelectList(Model.subSubCategories, "SubSubCategoryID", "SubsUBCategoryName", new { @class = "form-control", @id = "sub_sub_cat" }))
-                @Html.ActionLink("Add New Sub Sub Category", "Create", "SubSubCategories", new { @class = "btn btn-link" })
-            </div>
- 
-        <button type="submit" class="btn btn-primary" onclick="Add_Product()">Sign in</button>
-    </form>
+            <label class="form-label" for="customFile" style="background-color:transparent">Default file input example</label>
+            <input type="file" class="form-control" id="customFile" multiple  style="background-color:transparent"/>
+        </div>
+        <div id-="div_cat" class="form-row mt-5">
+            @Html.Partial("category.cshtml", Model.categories)
+        </div>
+        <div id="div_sub_cat" class="form-row mt-5">
+            @Html.Partial("SubCategory.cshtml", Model.subCategories)
+        </div>
+        <div id="div_sub_sub_cat" class="form-row mt-5">
+            @Html.Partial("SubSubCategory.cshtml", Model.subSubCategories)
+        </div>
+
+
+        <div class="variants" id="variants_add">
+            <button type="button" class="btn btn-primary col-md-12 inline-block mt-5" id="Add_Variant" style="background-color:#018A9A">Add Variants</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary col-md-12 inline-block mt-5" onclick="Add_Product()" style="background-color:#018A9A">Add Product</button>
+        </div>
+    </div>
 <script>
-    function Add_Product() {
-        var psc = new Product_and__subcat();
-        var p = new Product();
-        var img = new Product_Images();
-        var subsubcat = new SubSubCategory();
-        var subcat = new SubCategory();
-        var cat = new Category();
-        p.ProductName = $('#pname').val();
-        p.Description = $('#pdesc').val();
-        subsubcat.SubSubCategoryID = $("#sub_sub_cat").val();
-        subcat.SubCategoryID = $("#sub_cat").val();
-        cat.CategoryID = $("#cat").val
-        psc.Product = p;
-        psc.Product_Images = img;
-        psc.SubSubCategory = subsubcat;
-        psc.SubCategory = subcat;
-        psc.Category = cat;
+    var id_div_var = 1;
+    var id_specs_div = 100;
+    
+    $("#Add_Variant").click(function () {
+        $("#variants_add").append('<hr style=""/>')
+        $("#variants_add").append('<div class="added_variant row mt-5" id="' + id_div_var + '" style="background-color:transparent"></div>');
+        $("#" + id_div_var ).append('<select class="form-control col-md-12 mt-5 ddl_variant" style="background-color:transparent">' +
+            ' @foreach (var item in Model.variants) { <option value="@item.VariantID">@item.VariantName</option> }' + '</select>');
+        $("#" + id_div_var).append('<a class="form-control col-sm-12 btn btn-link mt-5" href="/Variants/Create" style="color:#018A9A">Add new Variant</a>');
+        //$("#" + id_div_var).append('<div class="Add_Specification_Div" id="' + id_specs_div + '"><div>');
+        $("#" + id_div_var).append('<input type="text" Placeholder="Please enter Variant Stock" class="Stock form-control col-sm-12 mt-2" style="background-color:transparent"/>');
+        $("#" + id_div_var).append('<input type="text" Placeholder="Please enter Variant Price" class="Price form-control col-sm-12 mt-2" style="background-color:transparent"/>');
+        $("#" + id_div_var).append('<input type="text" Placeholder="Please enter Variant Discount" class="Discount form-control col-sm-12 mt-2" style="background-color:transparent"/>');
+        $("#" + id_div_var).append('<button class="btn btn-primary col-md-12 mt-2" onclick="Add_Specs(event);" style="background-color:#018A9A">Add Specs of Variant</button>');
+        id_div_var++;
+        id_specs_div++;
+
+    });
+    function Add_Specs(event)
+    {
+        var elm = event.target.parentElement;
+        //alert(event.target.parentElement);
+        $(elm).append('<div class="for_specs row mt-3 container" id="' + id_specs_div + '" style="background-color:transparent"></div>');
+        $("#" + id_specs_div).append('<input type="text" Placeholder="Please enter Specification Name" class="spec_name form-control col-sm-12" style="background-color:transparent"/>');
+        $("#" + id_specs_div).append('<input type="text" Placeholder="Please enter Specification Value" class="spec_value form-control col-sm-12 mt-2" style="background-color:transparent"/>');
+        $("#" + id_specs_div).append('<select class="form-control col-sm-12 select_top mt-2" style="background-color:transparent"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="0">0</option></select>');
+        id_specs_div++;
+
+
+    }
+   
+    function Add_Product()
+    {
+        var Variant_list = [];
+        
+        var List_of_List_of_Specs = [];
+        debugger;
+        //alert(document.getElementsByClassName('added_variant').length);
+        var variant_div = document.getElementsByClassName('added_variant');
+        for (var i = 0; i < variant_div.length; i++)
+        {
+            var select_variant_div = variant_div[i];
+            var variants = new Object();
+            variants.VariantID = $(select_variant_div).find('.ddl_variant').val();
+            variants.status = 1;
+            variants.Var_Stock=$(select_variant_div).find('.Stock').val();
+            variants.Var_Price=$(select_variant_div).find('.Price').val();
+            variants.Var_Discount=$(select_variant_div).find('.Discount').val();
+            Variant_list.push(variants);
+            var List_of_Specs = [];
+            var specs = $(select_variant_div).find('.for_specs');
+            for (var j = 0; j < specs.length; j++)
+            {
+                var selected_variant_specs = specs[j];
+                var spec = new Object();
+                //alert($(selected_variant_specs).find('.spec_name').val());
+                //alert($(selected_variant_specs).find('.spec_value').val());
+                spec.SpecName = $(selected_variant_specs).find('.spec_name').val();
+                spec.SpecValue = $(selected_variant_specs).find('.spec_value').val();
+                spec.VariantID = $(select_variant_div).find('.ddl_variant').val();
+                spec.top= $(selected_variant_specs).find('.select_top').val();
+                List_of_Specs.push(spec);
+
+            }
+            List_of_List_of_Specs.push(List_of_Specs);
+
+        }
+    var psc = new Object();
+    var p = new Object();
+    var img = new Object();
+    var subsubcat = new Object();
+    var subcat = new Object();
+    var cat = new Object();
+    p.ProductName = $('#pname').val();
+    p.Description = $('#pdesc').val();
+    subsubcat.SubSubCategoryID = $("#sub_sub_cat").val();
+    subcat.SubCategoryID = $("#SubCategories").val();
+    cat.CategoryID = $("#cat").val();
+    psc.Product = p;
+    psc.Product_Images = img;
+    psc.SubSubCategory = subsubcat;
+    psc.SubCategory = subcat;
+    psc.Category = cat;
+    psc.product_Variants = Variant_list;
+    psc.Product_variant_specifications = List_of_List_of_Specs;
+    $.ajax({
+                type: "POST",
+                url: "@Url.Action("Index", "Home", null)",
+                data: { p: psc },
+                //contentType: 'application/json; charset=utf-8',
+                success: function myfunction(Response) {
+
+                }, error: function (request, status, error) {
+                }
+            });
+    }
+</script>
+
+<script type="text/javascript">
+    $('select[name="Categories"]').change(function () {
+        var end = this.value;
+        alert(end);
         $.ajax({
                     type: "POST",
-                    url: "@Url.Action("SaveProduct_withCat", "Home", null)",
-                    data: JSON.stringify({ p: psc }),
-                    contentType: 'application/json; charset=utf-8',
-                    success: function myfunction(Response) {
-                        
-                    }, error: function (request, status, error) {
+                    url: "@Url.Action("UpdateSubCat", "Home", null)",
+                    data: {cat: end  },
+                    //contentType: 'application/json; charset=utf-8',
+                    success: function myfunction(Response)
+                    {
+                         $('#div_sub_cat').html(Response)
+                    },
+                    error: function (request, status, error)
+                    {
+                    }
+                });
+    });
+
+</script>
+<script type="text/javascript">
+    function Update_Sub_Sub()
+    {
+        var end = $('#SubCategories').val();
+        alert(end);
+        $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("UpdateSubSubCat", "Home", null)",
+                    data: {sub_cat: end  },
+                    //contentType: 'application/json; charset=utf-8',
+                    success: function myfunction(Response)
+                    {
+                         $('#div_sub_sub_cat').html(Response)
+                    },
+                    error: function (request, status, error)
+                    {
                     }
                 });
     }
+
 </script>
