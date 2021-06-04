@@ -31,6 +31,10 @@ namespace Practice_Wesite_Admin
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(2);//You can set Time   
+            });
             services.AddMvc();
             services.AddDbContext<ApplicationContext>(item => item.UseSqlServer("Data Source=172.16.14.150;Initial Catalog=Ecommerce_Website;Persist Security Info=True;User ID=qaserver;Password=apple123!@#;MultipleActiveResultSets=True;Application Name=EntityFramework  TrustServerCertificate=false"));
 
@@ -52,6 +56,7 @@ namespace Practice_Wesite_Admin
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>

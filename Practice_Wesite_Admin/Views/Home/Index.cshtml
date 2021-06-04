@@ -14,11 +14,11 @@
                 <input type="text" class="form-control" id="pdesc" placeholder="Product Description" style="background-color:transparent">
             </div>
         </div>
-        <div class="for-row">
+        @*<div class="for-row">
 
             <label class="form-label" for="customFile" style="background-color:transparent">Default file input example</label>
             <input type="file" class="form-control" id="customFile" multiple  style="background-color:transparent"/>
-        </div>
+        </div>*@
         <div id-="div_cat" class="form-row mt-5">
             @Html.Partial("category.cshtml", Model.categories)
         </div>
@@ -71,6 +71,11 @@
    
     function Add_Product()
     {
+        debugger;
+        var psc = new Object();
+        
+
+        
         var Variant_list = [];
         
         var List_of_List_of_Specs = [];
@@ -105,7 +110,7 @@
             List_of_List_of_Specs.push(List_of_Specs);
 
         }
-    var psc = new Object();
+    
     var p = new Object();
     var img = new Object();
     var subsubcat = new Object();
@@ -123,14 +128,17 @@
     psc.Category = cat;
     psc.product_Variants = Variant_list;
     psc.Product_variant_specifications = List_of_List_of_Specs;
-    $.ajax({
-                type: "POST",
-                url: "@Url.Action("Index", "Home", null)",
-                data: { p: psc },
-                //contentType: 'application/json; charset=utf-8',
-                success: function myfunction(Response) {
-
-                }, error: function (request, status, error) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Index", "Home")",
+            data: {p : psc},
+            success: function myfunction(Response)
+            {
+               // alert("success");
+                window.location.replace("/Home/SaveFile");
+            }, error: function (request, status, error) {
+               // alert("success");
+                window.location.replace("/Home/SaveFile");
                 }
             });
     }
@@ -139,7 +147,7 @@
 <script type="text/javascript">
     $('select[name="Categories"]').change(function () {
         var end = this.value;
-        alert(end);
+        //alert(end);
         $.ajax({
                     type: "POST",
                     url: "@Url.Action("UpdateSubCat", "Home", null)",
@@ -160,7 +168,7 @@
     function Update_Sub_Sub()
     {
         var end = $('#SubCategories').val();
-        alert(end);
+        //alert(end);
         $.ajax({
                     type: "POST",
                     url: "@Url.Action("UpdateSubSubCat", "Home", null)",

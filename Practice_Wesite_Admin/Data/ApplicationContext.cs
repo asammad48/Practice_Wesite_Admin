@@ -22,6 +22,7 @@ namespace Practice_Wesite_Admin.Data
       public DbSet<Practice_Wesite_Admin.Models.Category_subCategory> Category_subCategory { get; set; }
       public DbSet<Practice_Wesite_Admin.Models.SubCategory_SubSubcategory> SubCategory_SubSubcategory { get; set; }
       public DbSet<Specification> specifications { get; set; }
+        public DbSet<Product_Images> images { get; set; }
 
     }
 }
